@@ -1670,6 +1670,10 @@ class port_display {
 						$package_names = pkg_prefix_sort($package_names);
 					}
 
+					# label each ABI row: CURRENT, or EOL for a FreeBSD major
+					# version no longer supported (see Packages::ReleaseStatus)
+					$packages->FetchSupportedReleases();
+
 					# here, we access the data in package name sorted order
 					# it's easier to sort the names along, then used that to access the data.
 					foreach ($package_names as $key => $package_name) {
@@ -1698,9 +1702,32 @@ class port_display {
 							
 								continue;
 							}
-							$HTML .= '<tr>';
+							#
+							# The label is a word, not just a colour: blue for CURRENT,
+							# orange for EOL, and an EOL row is dimmed.  "n/a" and "-"
+							# in the version cells keep their meanings.
+							#
+							$ABI_parts = explode(':', $ABI);
+							$major     = $ABI_parts[1] ?? '';
+							switch ($packages->ReleaseStatus($ABI)) {
+								case 'current':
+									$HTML .= '<tr class="abi-current">';
+									$HTML .= '<td>' . $ABI . ' <span class="abi-label abi-label-current" title="'
+										. htmlspecialchars(sprintf(_('FreeBSD %s is -CURRENT, the development branch'), $major)) . '">'
+										. _('CURRENT') . '</span></td>';
+									break;
 
-							$HTML .= '<td>' . $ABI . '</td>';
+								case 'eol':
+									$HTML .= '<tr class="abi-eol">';
+									$HTML .= '<td><span class="abi-name">' . $ABI . '</span> <span class="abi-label abi-label-eol" title="'
+										. htmlspecialchars(sprintf(_('FreeBSD %s is no longer supported (end of life)'), $major)) . '">'
+										. _('EOL') . '</span></td>';
+									break;
+
+								default:
+									$HTML .= '<tr>';
+									$HTML .= '<td>' . $ABI . '</td>';
+							}
 
 							foreach ($archs as $arch) {
 								if (isset($ABI_q_l[$arch]['version'])) {

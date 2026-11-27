@@ -1066,6 +1066,36 @@ table.packages {
   vertical-align: top;
 }
 
+/*
+  Port page Packages table: an ABI row for -CURRENT gets a blue "CURRENT" label,
+  one for a FreeBSD major version no longer supported gets an orange "EOL" label
+  and is dimmed.  Always a word as well as a colour: blue and orange stay apart
+  for colour-blind readers, green and yellow do not.  White text on both keeps
+  a contrast ratio above 4.5:1 in light and dark mode.
+*/
+.packages .abi-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0 0.3em;
+  border-radius: 3px;
+  white-space: nowrap;
+  color: white;
+}
+
+.packages .abi-label-current {
+  background-color: #0b5cad;
+}
+
+.packages .abi-label-eol {
+  background-color: #a35200;
+}
+
+/* not while hovered or focused: the version pop-up is drawn inside the cell */
+.packages tr.abi-eol .abi-name,
+.packages tr.abi-eol td.version:not(:hover):not(:focus) {
+  opacity: 0.55;
+}
+
 
 /*
   from https://www.w3schools.com/css/css_tooltip.asp

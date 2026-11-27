@@ -102,4 +102,67 @@ class Packages {
 		return $archs;
 	}
 
+	#
+	# Which FreeBSD major versions are still supported, from the
+	# supported_releases table (refreshed nightly by ingress-scripts
+	# supported_releases_update.pl).  The port page uses this to label the
+	# ABI rows of the Packages table: CURRENT, or EOL.
+	#
+	# Sets $this->SupportedMajors to array(major => major) and
+	# $this->CurrentMajor to the major of branch 'main' (null if none).
+	# If the query fails or the table is empty, both stay empty and
+	# ReleaseStatus() labels nothing, rather than calling every ABI EOL.
+	#
+	var $SupportedMajors = array();
+	var $CurrentMajor    = null;
+
+	function FetchSupportedReleases() {
+		$this->SupportedMajors = array();
+		$this->CurrentMajor    = null;
+
+		$sql = 'SELECT branch, major FROM supported_releases';
+		$result = pg_query_params($this->dbh, $sql, array());
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
+			return 0;
+		}
+
+		while ($myrow = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+			$major = intval($myrow['major']);
+			$this->SupportedMajors[$major] = $major;
+			if ($myrow['branch'] == 'main') {
+				$this->CurrentMajor = $major;
+			}
+		}
+
+		return count($this->SupportedMajors);
+	}
+
+	#
+	# $ABI is FreeBSD:14:amd64, FreeBSD:14:latest, or similar.
+	# Returns 'current' if its major is the one on main, 'eol' if that major
+	# is no longer supported, otherwise ''.
+	#
+	# A major above every supported one is not EOL: pkg.freebsd.org can list
+	# a new ABI (e.g. the next CURRENT) a day or so before supported_releases
+	# does, because newvers.sh moves main to N+1 the day stable/N is cut.
+	#
+	function ReleaseStatus($ABI) {
+		$parts = explode(':', $ABI);
+		if (count($parts) < 2 || !ctype_digit($parts[1]) || empty($this->SupportedMajors)) {
+			return '';
+		}
+
+		$major = intval($parts[1]);
+		if ($major === $this->CurrentMajor) {
+			return 'current';
+		}
+
+		if (!isset($this->SupportedMajors[$major]) && $major < max($this->SupportedMajors)) {
+			return 'eol';
+		}
+
+		return '';
+	}
+
 }

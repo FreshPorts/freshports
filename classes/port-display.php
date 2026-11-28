@@ -1687,19 +1687,18 @@ class port_display {
 						}
 						$HTML .= '</tr>';
 
-						# Get the ABI (sort of) for the last row in this table.
-						# It will be something like FreeBSD:15:quarterly
-						# We don't display that row because historically, the quaterly branch is
-						# not build for -CURRENT.
 						#
-						$LastArrayPosition = array_key_last($package);
+						# Packages are not built for the quarterly branch of FreeBSD
+						# CURRENT, so that row would only ever show "-" (#554).  Skip it.
+						# CURRENT is the major version of branch 'main' in
+						# supported_releases (#743), e.g. FreeBSD:16:quarterly.
+						# If that is unknown (empty table, failed query), show every row.
+						#
+						$CurrentQuarterly = isset($packages->CurrentMajor)
+							? 'FreeBSD:' . $packages->CurrentMajor . ':quarterly'
+							: null;
 						foreach ($package as $ABI => $ABI_q_l) {
-							#
-							# re https://github.com/FreshPorts/freshports/issues/554
-							# Try not to display the quarterly branch for the latest version.
-							#
-							if ($ABI === $LastArrayPosition) {
-							
+							if ($ABI === $CurrentQuarterly) {
 								continue;
 							}
 							#

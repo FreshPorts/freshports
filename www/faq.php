@@ -751,7 +751,7 @@ $
 
    <p><?php echo _('Not only can FreshPorts email you when one of your watched ports is updated, it can also email you when the package is ready to install.'); ?></p>
 
-   <p><?php echo _('FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT of FreeBSD. Packages are not built for that ABI/package set combination. You may see CURRENT/quarterly listed on some pages. That is easier to do than to keep track of which branch is CURRENT.'); ?>
+   <p><?php echo _('FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT of FreeBSD. Packages are not built for that ABI/package set combination. FreshPorts knows which major version is CURRENT from the list of supported FreeBSD releases.'); ?>
 
    <p><?php echo _('To get new package notifications, follow these steps:'); ?>
 

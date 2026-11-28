@@ -28,6 +28,11 @@ Please read <a href="/fraud/">this</a> for more information about how freshports
 tries to scam money from unsuspecting people.
 </td></tr>
 </table>
+<?php
+	# no freshports_ShowFooter() here, which is where pages record how long
+	# they took to compose; record it here (#177)
+	if ($Statistics) $Statistics->Save();
+?>
 
 </BODY>
 </HTML>

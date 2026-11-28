@@ -296,6 +296,10 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 
 	}
 
+	# This page has no freshports_ShowFooter(), which is where the other
+	# pages record how long they took to compose; record it here (#177).
+	if ($Statistics) $Statistics->Save();
+
 ?>
 
 </body>

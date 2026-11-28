@@ -457,36 +457,12 @@ function freshports_Search_Committer($Committer) {
 }
 
 function freshports_MainContentTable($Classes=BORDER) {
-	return '<table class="maincontent fullwidth ' . $Classes . '">' . PortsFreezeStatus();
+	return '<table class="maincontent fullwidth ' . $Classes . '">';
 }
 
 function  freshports_ErrorContentTable() {
 	echo '<table class="fullwidth bordered centered">
 ';
-}
-
-
-function PortsFreezeStatus() {
-	#
-	# this function checks to see if there is a port freeze on.
-	# if there is, it returns text that indicates same.
-	# otherwise, it returns an empty string.
-	#
-	$result = '';
-
-	if (file_exists(SIGNALS_DIRECTORY . "/PortsFreezeIsOn")) {
-		$result = '
-<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!') . '</tr>
-<tr><td>';
-		$result .= '
-<p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html" rel="noopener noreferrer">ports freeze</a>
- means that commits will be few and far between and only by approval.
-</p>
-</td></tr>
-';
-	}
-
-	return $result;
 }
 
 

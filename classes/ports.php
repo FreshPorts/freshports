@@ -1323,4 +1323,9 @@ LEFT OUTER JOIN
 
 		return $USES_PHP;
 	}
+
+	function UsesKmod() {
+		# a kernel module: building it from the port needs the kernel source - see #365
+		return !empty($this->uses) && in_array(USES_KMOD, preg_split('/\s+|:/', $this->uses));
+	}
 }

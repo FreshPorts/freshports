@@ -1525,6 +1525,14 @@ class port_display {
 				$HTML .= '<dt>' . _('No installation instructions:') . '</dt><dd>' . _('This port has been deleted.') . '</dd>';
 			} else {
 				$HTML .= '<dt' . $this->SectionID('add') . '><b>' . _('To install <a href="/faq.php#port" title="what is a port?">the port</a>:') . '</b>' . $this->SectionAnchorLink('add') . '</dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
+				#
+				# USES=kmod ports build a kernel module, and Mk/Uses/kmod.mk stops
+				# the build unless the kernel source is in /usr/src or SRC_TOP.
+				# Say so before someone finds out the hard way - see #365
+				#
+				if ($port->UsesKmod()) {
+					$HTML .= '<dd>' . sprintf(_('Building this port needs the FreeBSD kernel source in %1$s, or in the directory %2$s names.'), '<kbd class="code">/usr/src</kbd>', '<kbd class="code">SRC_TOP</kbd>') . '</dd>';
+				}
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>' . _('No <a href="/faq.php#package" title="what is a package?">package</a> is available:') . '</b> ' . $port->no_package . '</dt>';
 				} else {

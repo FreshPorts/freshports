@@ -177,6 +177,7 @@ define('DEFAULT_NUMBER_OF_COMMITS', 100);
 
 const USES_PYTHON = 'python';
 const USES_PHP    = 'php';
+const USES_KMOD   = 'kmod';
 
 const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 

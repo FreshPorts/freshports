@@ -199,7 +199,7 @@ function freshports_git_commit_Link_freebsd($revision, $hostname, $path) {
 
 # codeberg
 function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
-	$url = 'https://codeberg.org/FreeBSD/';
+	$url = 'https://' . DEFAULT_CODEBERG . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':
@@ -225,7 +225,7 @@ function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
 
 # github
 function freshports_git_commit_Link_github($revision, $hostname, $path) {
-	$url = 'https://github.com/FreeBSD/';
+	$url = 'https://' . DEFAULT_GITHUB . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':
@@ -251,7 +251,7 @@ function freshports_git_commit_Link_github($revision, $hostname, $path) {
 
 # git lab
 function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
-	$url = 'https://gitlab.com/FreeBSD/';
+	$url = 'https://' . DEFAULT_GITLAB . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':
@@ -282,7 +282,7 @@ function freshports_git_Link_freebsd($hostname, $path, $pathname) {
 
 # codeberg
 function freshports_git_Link_codeberg($hostname, $path, $pathname) {
-	$url = 'https://codeberg.org/FreeBSD/';
+	$url = 'https://' . DEFAULT_CODEBERG . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':
@@ -308,7 +308,7 @@ function freshports_git_Link_codeberg($hostname, $path, $pathname) {
 
 # github
 function freshports_git_Link_github($hostname, $path, $pathname) {
-	$url = 'https://github.com/FreeBSD/';
+	$url = 'https://' . DEFAULT_GITHUB . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':
@@ -334,7 +334,7 @@ function freshports_git_Link_github($hostname, $path, $pathname) {
 
 # git lab
 function freshports_git_Link_gitlab($hostname, $path, $pathname) {
-	$url = 'https://gitlab.com/FreeBSD/';
+	$url = 'https://' . DEFAULT_GITLAB . '/FreeBSD/';
 
 	switch ($path) {
 		case '/ports':

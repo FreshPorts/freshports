@@ -311,6 +311,22 @@ echo freshports_ShowFooter();
 				if ($OneListID) {
 					$Added = $WatchListElement->Add($User->id, $OneListID, $ElementID);
 				} else {
+					#
+					# #60: AddToDefault() adds the port to every default watch
+					# list.  With none (no watch lists at all, or none marked
+					# default) it added nothing, still reported success, and
+					# the visitor went back to the page they came from, so the
+					# icon seemed to do nothing.  Send them instead to
+					# watch-list-maintenance.php, which says they have no
+					# default watch list and is where they create one or mark
+					# one as default.
+					#
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
+					if (freshports_WatchListCountDefault($db, $User->id) == 0) {
+						pg_exec($db, 'ROLLBACK');
+						header('Location: /watch-list-maintenance.php');
+						exit;
+					}
 					$Added = $WatchListElement->AddToDefault($User->id, $ElementID);
 				}
 				if ($Added == 1) {

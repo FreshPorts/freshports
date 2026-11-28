@@ -15,13 +15,13 @@
 <tr><td class="vtop">
 <table class="fullwidth borderless">
 <tr>
-	<?php echo freshports_PageBannerText("Fraud - This is not FreshPorts.org!"); ?>
+	<?php echo freshports_PageBannerText("Fraud - This is not freshports.org!"); ?>
 </tr>
 
 <tr><td>
 <P>
 Someone is trying to scam you.  Please note the URL you are at and compare it to where
-you want to be.  I suspect you may be at freshports.net, not FreshPorts.org.  
+you want to be.  I suspect you may be at freshports.net, not freshports.org.  
 
 <p>
 Please read <a href="/fraud/">this</a> for more information about how freshports.net

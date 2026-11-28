@@ -24,7 +24,7 @@
 <p>
 <h2>About this document</h2>
 <p>
-This page documents how <a href="http://www.FreshPorts.org/">FreshPorts</a> can use the
+This page documents how <a href="https://www.freshports.org/">FreshPorts</a> can use the
 404 error process to serve up virtual pages.
 
 <p>
@@ -140,7 +140,7 @@ categories, please see <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books
 in the <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/index.html">FreeBSD Porter's Handbook</a>.
 
 <p>
-Here is entry from the Makefile for <a href="http://www.FreshPorts.org/databases/zpygresqlda/">databases/zpygresqlda</a>
+Here is entry from the Makefile for <a href="https://www.freshports.org/databases/zpygresqlda/">databases/zpygresqlda</a>
 which specifies the categories for that port:
 
 <blockquote><pre class="code">CATEGORIES=     databases www zope</pre></blockquote>
@@ -155,7 +155,7 @@ The physical directory for each port is stored within the ports table.
 The table also contains a <code class="code">categories</code> field which contains the value
 extracted from the Makefile (e.g. for this port, the field would contain 
 <code class="code">databases www zope</code>).  Have a look at 
-<a href="http://www.FreshPorts.org/databases/zpygresqlda/">databases/zpygresqlda</a> to see how this
+<a href="https://www.freshports.org/databases/zpygresqlda/">databases/zpygresqlda</a> to see how this
 information is used.  Look for the entry titled <i>Also listed in</i>.
 
 <p>
